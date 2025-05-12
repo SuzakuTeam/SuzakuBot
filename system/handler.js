@@ -162,15 +162,15 @@ module.exports = async (m, system, store) => {
 
     } catch (error) {
       if (error.name) {
-        for (let owner of config.owner) {
-          let jid = await system.onWhatsApp(owner + "@s.whatsapp.net");
+        for (let lapor of config.reportNumber) {
+          let jid = await system.onWhatsApp(lapor + "@s.whatsapp.net");
           if (!jid[0].exists) continue;
           let caption = "*– 乂 *Error Terdeteksi* 📉*\n"
           caption += `> *Nama command:* ${m.command}\n`
           caption += `> *Lokasi File:* ${name}`
           caption += `\n\n${Func.jsonFormat(error)}`
 
-          system.sendMessage(owner + "@s.whatsapp.net", {
+          system.sendMessage(lapor + "@s.whatsapp.net", {
             text: caption
           })
         }

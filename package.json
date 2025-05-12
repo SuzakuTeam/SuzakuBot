@@ -1,6 +1,6 @@
 {
   "name": "Suzaku",
-  "version": "1.7.0",
+  "version": "1.0.1",
   "description": "- WhatsApp bot using Library Baileys",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AxellNetwork/nekoBot.git"
+    "url": "git+https://github.com/SuzakuTeam/SuzakuBot.git"
   },
   "keywords": [
     "botwa"

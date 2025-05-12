@@ -2,8 +2,8 @@ const fs = require("node:fs");
 
 const config = {
   owner: ["6285270058464"],
-  systemName: "System Cultivation",
-  reportNumber: "6285270058464",
+  systemName: "SuzakuBot",
+  reportNumber: ["62895342022385"], // Jangan Ubah Agar Setiap Error Masuk Ke Nomor ini, Kalau Mau Fix Sendiri Ubah aja.
   sessions: "sesi",
   msg: {
   	botAdmin: "> Bot Harus Menjadi Admin Untuk Menggunakan Feature Ini!",
