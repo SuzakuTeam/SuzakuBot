@@ -10,15 +10,23 @@
 SuzakuBot adalah bot WhatsApp modern yang dirancang untuk memberikan pengalaman pengguna yang efisien dan intuitif. Dengan fokus pada kecepatan eksekusi dan tampilan yang bersih, SuzakuBot dapat membantu mengotomatisasi berbagai tugas dalam grup dan percakapan pribadi WhatsApp.
 
 ## Tentang Versi Terbaru
-> **Tentang Versi 1.0.1**: Pada Versi Ini Suzaku Sudah Berkembang Menjadi Lebih Baik. Dengan Beberapa Feature Yang Sudah Di Tambahkan Dan Fixxed Beberapa Feature.
+**Tentang Versi 1.0.1:**
+> Pada Versi Ini Suzaku Sudah Berkembang Menjadi Lebih Baik. Dengan Beberapa Feature Yang Sudah Di Tambahkan Dan Fixxed Beberapa Feature.
 
-> **Apa Saja Yang Baru??**: Kami Menambahkan Beberapa Object Yang Mungkin Berguna Untuk Pengoptimalan Feature. Seperti `system.sendMessageWithThumb` Yang Mengirim Thumbnail Langsung Dengan Pesan.
+**Apa Saja Yang Baru??:**
+> Kami Menambahkan Beberapa Object Yang Mungkin Berguna Untuk Pengoptimalan Feature. Seperti `system.sendMessageWithThumb` Yang Mengirim Thumbnail Langsung Dengan Pesan.
 
-> **Adakah Properti Baru Di Handler?**: Ya, Ada Beberapa Yang Baru Termasuk Penambahan Socket Baru! Bukan Hanya **system** Tapi Ada Banyak. Seperti `conn` `client` `sock` Anda Bebas Memilih Salah Satu Nya! **Bagaimana Menggunakan Nya??**: Cara Penggunaan Sudah Tertera Di Bagian Bawah!
+**Adakah Properti Baru Di Handler?:**
+> Ya, Ada Beberapa Yang Baru Termasuk Penambahan Socket Baru! Bukan Hanya **system** Tapi Ada Banyak. Seperti `conn` `client` `sock` Anda Bebas Memilih Salah Satu Nya! **Bagaimana Menggunakan Nya??**: Cara Penggunaan Sudah Tertera Di Bagian Bawah!
 
-> **Apa Fungsi Baru Yaitu Ctx??**: Fungsi Tersebut Sama Seperti Object `M` Tapi Karena Salah Satu Developer Kami Memakai Ctx Jadi Saya Menambahkan Properti Itu Agar Dia Merasa Nyaman.
+**Apa Fungsi Baru Yaitu Ctx??:** 
+> Fungsi Tersebut Sama Seperti Object `M` Tapi Karena Salah Satu Developer Kami Memakai Ctx Jadi Saya Menambahkan Properti Itu Agar Dia Merasa Nyaman.
 
-> **Btw**: Ctx Itu Wajib Di Ikutkan Dengan Properti `m` Jika Tidak Maka Akan Ada Missing Beberapa Object.
+**Btw:**
+> Ctx Itu Wajib Di Ikutkan Dengan Properti `m` Jika Tidak Maka Akan Ada Missing Beberapa Object Yang Sangat Menggangu.
+
+## Versi Saat Ini
+> **VERSI:** Versi Saat Ini Adalah 1.0.1
 
 ## Fitur
 
