@@ -329,7 +329,14 @@ ${list.map((a) => Object.entries(a).map(([a, b]) => `> *🔸 ${a.capitalize()}* 
             }
         }
         break;
-    }
+    default:
+      if (db.list().settings.gconly) {
+      	if (!m.isGroup) {
+      		await m.reply("> Saat Ini Status Bot Group Only! Hanya Bisa Di Akses Ketika Di Group")
+      		return 
+      	}
+      }
+   }
 };
 
 let file = require.resolve(__filename);

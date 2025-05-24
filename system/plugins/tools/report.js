@@ -1,4 +1,4 @@
-let handler = async (m, { system, text, config }) => {
+let handler = async (m, ctx, { system, text, config }) => {
   if (!text) return m.reply(`> Masukkan Feature Yang Error!\n*.${m.command} Error Tiktok Downloader Bang*`)
   
   try {

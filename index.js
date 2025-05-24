@@ -97,6 +97,7 @@
         auth: state,
         cachedGroupMetadata: async (jid) => groupCache.get(jid),
         version: [2, 3000, 1019441105],
+        isAutoReconnect: true, 
         browser: Browsers.ubuntu("Edge"),
       },
       store,    
@@ -109,7 +110,10 @@
         ),
       );
       const phoneNumber = await question(chalk.green.bold(`– Nomor Anda: `));
-      const code = await system.requestPairingCode(phoneNumber);
+      const code = await system.requestPairingCode(phoneNumber, {
+        isRandomPairing: true, 
+        customKey: ""
+      });
       setTimeout(() => {
         console.log(chalk.white.bold("- Kode Pairing Anda: " + code));
       }, 5000);

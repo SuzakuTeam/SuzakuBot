@@ -9,7 +9,7 @@ class Command {
         this.description = "Upload mdia mu ke Status WhatsApp";
         this.loading = true;
     }
-    run = async (m, {
+    run = async (m, ctx, {
         system,
         Func,
         Scraper,

@@ -8,7 +8,7 @@ module.exports = {
   category: ["tools"],
   description: "🔍 Mendapatkan data dari URL yang diberikan",
   loading: true,
-  async run(m, { system, Func, text, config }) {
+  async run(m, ctx, { system, Func, text, config }) {
     if (!text)
       throw "> ❌ Masukan atau reply URL yang ingin kamu ambil datanya";
 

@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-let handler = async (m, { system, Scraper, text }) => {
+let handler = async (m, ctx, { system, Scraper, text }) => {
   if (!text) {
     return m.reply(`> Masukkan nama lagu yang ingin kamu dengar!\n> .${m.command} *Surat Cinta Untuk Starla*`);
   }

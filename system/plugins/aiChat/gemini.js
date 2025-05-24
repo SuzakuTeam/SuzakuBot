@@ -1,6 +1,5 @@
-const { GoogleGenerativeAI } = require("@google/genai")
-import fs from 'fs'
-let genAI = new GoogleGenerativeAI({ apikey: "AIzaSyBL8zt0eSiidVE_C5o3SgyOW3drFgg9gwg" });
+const { GoogleGenAI } = require("@google/genai")
+let genAI = new GoogleGenAI({ apiKey: "AIzaSyBL8zt0eSiidVE_C5o3SgyOW3drFgg9gwg" });
 
 let handler = async (ctx, { conn, text }) => {
 	if (!text) return ctx.reply(`> Masukkan Pertanyaan Anda Kepada Gemini!\n> .${m.command} Apa Itu Flu?`)

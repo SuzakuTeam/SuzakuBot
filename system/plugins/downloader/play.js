@@ -1,7 +1,7 @@
 const axios = require('axios');
 const yts = require('yt-search');
 
-let handler = async (m, { system, text, Scraper, Uploader, Func }) => {
+let handler = async (m, ctx, { system, text, Scraper, Uploader, Func }) => {
   if (!text) throw '> Masukkan nama lagu yang ingin dicari!\n> Contoh: .play Surat Cinta Untuk Starla';
 
   const { all } = await yts({

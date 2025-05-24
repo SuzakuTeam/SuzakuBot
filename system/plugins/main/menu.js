@@ -16,13 +16,12 @@ module.exports = {
     let matches = data.match(casePattern);
     if (!matches) return m.reply("Tidak ada case yang ditemukan.");
     matches = matches.map((match) => match.replace(/case\s+"([^"]+)"/, "$1"));
+
     let menu = {};
     plugins.forEach((item) => {
       if (item.category && item.command && item.alias) {
         item.category.forEach((cat) => {
-          if (!menu[cat]) {
-            menu[cat] = { command: [] };
-          }
+          if (!menu[cat]) menu[cat] = { command: [] };
           menu[cat].command.push({
             name: item.command,
             alias: item.alias,
@@ -31,11 +30,10 @@ module.exports = {
         });
       }
     });
+
     let cmd = 0;
     let alias = 0;
-    let pp = await system
-      .profilePictureUrl(m.sender, "image")
-      .catch(() => "https://files.catbox.moe/1463l1.jpg");
+    let pp = await system.profilePictureUrl(m.sender, "image").catch(() => "https://files.catbox.moe/1463l1.jpg");
 
     Object.values(menu).forEach((category) => {
       cmd += category.command.length;
@@ -44,13 +42,14 @@ module.exports = {
       });
     });
 
-    let premium = db.list().user[m.sender].premium.status;
-    let limit = db.list().user[m.sender].limit;
+    let userData = db.list().user[m.sender];
+    let premium = userData?.premium?.status;
+    let limit = userData?.limit;
 
     const header = `╭───〔 *Suzaku Bot* 〕───╮
 │  ✦ Hai, saya Suzaku!
 │  ✦ Bot WhatsApp siap membantu.
-╰────────────────────╯`;
+╰───────────────────╯`;
 
     const footer = `
 ╭──〔 *Info Tambahan* 〕
@@ -61,9 +60,7 @@ module.exports = {
 > 🥈 = Limit    🥇 = Premium
 ───────────────────`;
 
-    if (text === "all") {
-      let caption = `${header}
-
+    const baseInfo = `
 ╭──〔 *Info Pengguna* 〕
 │ ❖ Nama: ${m.pushName}
 │ ❖ Tag: @${m.sender.split("@")[0]}
@@ -77,7 +74,10 @@ module.exports = {
 │ ❖ Aktif: ${Func.toDate(process.uptime() * 1000)}
 │ ❖ Prefix: [ ${m.prefix} ]
 │ ❖ Total Perintah: ${cmd + alias + matches.length}
-╰──────────────────╯
+╰──────────────────╯`;
+
+    if (text === "all") {
+      let caption = `${header}${baseInfo}
 
 ╭──〔 *Menu – Other* 〕
 ${matches.map((a, i) => `│ ❖ (${i + 1}) ${m.prefix + a}`).join("\n")}
@@ -87,13 +87,13 @@ ${matches.map((a, i) => `│ ❖ (${i + 1}) ${m.prefix + a}`).join("\n")}
         caption += `
 
 ╭──〔 *Menu – ${tag.toUpperCase()}* 〕
-${commands.command.map((command, index) => `│ ❖ (${index + 1}) ${m.prefix + command.name} ${command.settings?.premium ? "🥇" : command.settings?.limit ? "🥈" : ""}`).join("\n")}
+${commands.command.map((cmd, i) => `│ ❖ (${i + 1}) ${m.prefix + cmd.name} ${cmd.settings?.premium ? "🥇" : cmd.settings?.limit ? "🥈" : ""}`).join("\n")}
 ╰──────────────────╯`;
       });
 
       caption += footer;
 
-      m.reply({
+      return m.reply({
         text: caption,
         contextInfo: {
           mentionedJid: system.parseMention(caption),
@@ -107,32 +107,19 @@ ${commands.command.map((command, index) => `│ ❖ (${index + 1}) ${m.prefix + 
           },
         },
       });
-    } else if (Object.keys(menu).includes(text.toLowerCase())) {
-      let list = menu[text.toLowerCase()];
-      let caption = `${header}
+    }
 
-╭──〔 *Info Pengguna* 〕
-│ ❖ Nama: ${m.pushName}
-│ ❖ Tag: @${m.sender.split("@")[0]}
-│ ❖ Status: ${m.isOwner ? "Developer" : premium ? "Premium" : "Gratis"}
-│ ❖ Limit: ${m.isOwner ? "Tak Terbatas" : limit}
-╰──────────────────╯
-
-╭──〔 *Info Bot* 〕
-│ ❖ Nama: ${pkg.name}
-│ ❖ Versi: v${pkg.version}
-│ ❖ Aktif: ${Func.toDate(process.uptime() * 1000)}
-│ ❖ Prefix: [ ${m.prefix} ]
-│ ❖ Total Perintah: ${cmd + alias + matches.length}
-╰──────────────────╯
+    if (Object.keys(menu).includes(text.toLowerCase())) {
+      const selected = menu[text.toLowerCase()];
+      let caption = `${header}${baseInfo}
 
 ╭──〔 *Menu – ${text.toUpperCase()}* 〕
-${list.command.map((a, i) => `│ ❖ (${i + 1}) ${m.prefix + a.name} ${a.settings?.premium ? "🥇" : a.settings?.limit ? "🥈" : ""}`).join("\n")}
+${selected.command.map((cmd, i) => `│ ❖ (${i + 1}) ${m.prefix + cmd.name} ${cmd.settings?.premium ? "🥇" : cmd.settings?.limit ? "🥈" : ""}`).join("\n")}
 ╰──────────────────╯`;
 
       caption += footer;
 
-      m.reply({
+      return m.reply({
         text: caption,
         contextInfo: {
           mentionedJid: system.parseMention(caption),
@@ -146,34 +133,92 @@ ${list.command.map((a, i) => `│ ❖ (${i + 1}) ${m.prefix + a.name} ${a.settin
           },
         },
       });
-    } else {
-      let list = Object.keys(menu);
-      let caption = `${header}
+    }
 
-╭──〔 *Info Pengguna* 〕
-│ ❖ Nama: ${m.pushName}
-│ ❖ Tag: @${m.sender.split("@")[0]}
-│ ❖ Status: ${m.isOwner ? "Developer" : premium ? "Premium" : "Gratis"}
-│ ❖ Limit: ${m.isOwner ? "Tak Terbatas" : limit}
-╰──────────────────╯
-
-╭──〔 *Info Bot* 〕
-│ ❖ Nama: ${pkg.name}
-│ ❖ Versi: v${pkg.version}
-│ ❖ Aktif: ${Func.toDate(process.uptime() * 1000)}
-│ ❖ Prefix: [ ${m.prefix} ]
-│ ❖ Total Perintah: ${cmd + alias + matches.length}
-╰──────────────────╯
+    let list = Object.keys(menu);
+    let caption = `${header}${baseInfo}
 
 ╭──〔 *Daftar Menu* 〕
 │ ❖ ( all ) ${m.prefix}menu all
 ${list.map((a) => `│ ❖ ( ${a} ) ${m.prefix}menu ${a}`).join("\n")}
 ╰──────────────────╯`;
 
-      caption += footer;
+    caption += footer;
 
-      m.reply({
-        text: caption,
+    if (config.menuButton) {
+      await m.reply({
+        image: { url: "https://files.catbox.moe/1463l1.jpg" },
+        caption,
+        footer: "Powered by Suzaku",
+        contextInfo: {
+        	mentionedJid: system.parseMention(caption),
+           externalAdReply: {
+             title: "© Suzaku | Playground",
+             body: "Bot WhatsApp - Simple & Powerful",
+             mediaType: 1,
+             sourceUrl: "https://whatsapp.com/channel/0029VbB0oUvBlHpYbmFDsb3E",
+             thumbnailUrl: "https://files.catbox.moe/1j88qv.jpg",
+             renderLargerThumbnail: true,
+           },
+        },
+        buttons: [
+          {
+            buttonId: 'action',
+            buttonText: { displayText: '📜 MENU SUZAKU' },
+            type: 4,
+            nativeFlowInfo: {
+              name: 'single_select',
+              paramsJson: JSON.stringify({
+                title: "LIST MENU",
+                sections: [
+                  {
+                    title: "MENU ALL",
+                    rows: [
+                      {
+                        header: '🌟 Semua Fitur',
+                        title: 'Lihat Semua Perintah',
+                        description: 'Lihat seluruh feature Suzaku',
+                        id: '.menu all',
+                      },
+                      ...list.map((c) => ({
+                        header: `MENU ${c.toUpperCase()}`,
+                        title: `TAMPILKAN MENU ${c.toUpperCase()}`,
+                        description: config.systemName,
+                        id: `.menu ${c}`,
+                      }))
+                    ]
+                  }
+                ]
+              })
+            }
+          },
+          {
+            buttonId: '.owner',
+            buttonText: { displayText: '👑 PENGUASA SUZAKU' },
+            type: 2
+          },
+          {
+            buttonId: '.donasi',
+            buttonText: { displayText: '❤️ DUKUNG SUZAKU' },
+            type: 2
+          },
+          {
+            buttonId: '.infobot',
+            buttonText: { displayText: 'ℹ️ TENTANG BOT' },
+            type: 2
+          }
+        ],
+        headerType: 1,
+        viewOnce: true
+      });
+      return await m.reply({
+    	audio: { url: "https://files.catbox.moe/ly3jz1.mp3" },
+    	ptt: true
+    })
+    } else {
+      await m.reply({
+      	image: { url: "https://files.catbox.moe/1463l1.jpg" },
+        caption,
         contextInfo: {
           mentionedJid: system.parseMention(caption),
           externalAdReply: {
@@ -186,6 +231,10 @@ ${list.map((a) => `│ ❖ ( ${a} ) ${m.prefix}menu ${a}`).join("\n")}
           },
         },
       });
+      return await m.reply({
+    	audio: { url: "https://files.catbox.moe/ly3jz1.mp3" },
+    	ptt: true
+    })
     }
   },
 };

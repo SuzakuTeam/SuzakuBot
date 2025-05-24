@@ -1,6 +1,6 @@
 //Pake Api Dulu Ygy, Nanti Kalau Ketemu Web Nya Kita Scrape, Btw Ini Juga Requestan Ya!
 
-let handler = async (m, { system, text }) => {
+let handler = async (m, ctx, { system, text }) => {
   if (!text) return m.reply("> Masukkan Text Yang Mau Di Ubah Ke QrCode!\n.text2qr Hai")
   
   try {

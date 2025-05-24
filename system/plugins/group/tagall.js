@@ -4,7 +4,7 @@ let handler = async (m, ctx, { conn, text }) => {
 	try {
 		let groupMetadata = await conn.groupMetadata(m.cht)
 		const participants = groupMetadata.participants.map(i => i.id)
-		let caption = `👥 Tag All Member! \n📩 Pesan: ${text ? text : "Tidak Ada Pesan"}\n📝 Total Member: ${participants.length}Member: `
+		let caption = `👥 Tag All Member! \n📩 Pesan: ${text ? text : "Tidak Ada Pesan"}\n📝 Total Member: ${participants.length}l: `
 		for (let participant of participants) {
 			caption += `\n@${participant.split("@")[0]}`
 		}

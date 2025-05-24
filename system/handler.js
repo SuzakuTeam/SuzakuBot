@@ -103,6 +103,26 @@ module.exports = async (m, system, store) => {
         )
           continue;
       }
+      
+      if (typeof plugin.before === "function") {
+      	if (
+      		plugin.before.call(system, m, ctx, {
+      			system,
+            conn,
+            client,
+            sock,
+            Func,
+            config,
+            Uploader,
+            store,
+            isAdmin,
+            botAdmin,
+            isPrems,
+            isBanned,
+      			})
+      		)
+      		continue;
+      }
 
       const cmd = usedPrefix
           ? (plugin.command && m.command.toLowerCase() === plugin.command) ||
@@ -125,6 +145,9 @@ module.exports = async (m, system, store) => {
           }
           if (plugin.settings.botAdmin && !botAdmin) {
             return m.reply(config.msg.botAdmin);
+          }
+          if (plugin.settings.ownerAndAdmin && !m.isOwner && !m.isAdmin) {
+          	return m.reply(config.msg.ownerAndAdmin)
           }
         }
 

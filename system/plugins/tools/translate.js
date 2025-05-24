@@ -1,4 +1,4 @@
-let handler = async (m, { system, Scraper, text }) => {
+let handler = async (m, ctx, { system, Scraper, text }) => {
   if (!text) return m.reply("Kirim pesan atau reply teks yang mau diterjemahkan. Contoh:\n.tr Hai Apa Kabar id-rs");
 
   let teks = "";
